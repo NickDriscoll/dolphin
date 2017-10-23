@@ -25,6 +25,9 @@
     <Filter Include="ControllerEmu\Setting">
       <UniqueIdentifier>{ce661cb4-f23f-4ab2-952d-402d381735e5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ControllerInterface\Pipes">
+      <UniqueIdentifier>{df5ba7b7-3359-4e3b-8ca2-d85d3d676947}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GCAdapter.cpp" />
@@ -109,6 +112,9 @@
     </ClCompile>
     <ClCompile Include="ControlReference\ControlReference.cpp">
       <Filter>ControllerInterface</Filter>
+    </ClCompile>
+    <ClCompile Include="ControllerInterface\Pipes\WinPipes.cpp">
+      <Filter>ControllerInterface\Pipes</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -201,6 +207,9 @@
     </ClInclude>
     <ClInclude Include="ControlReference\ControlReference.h">
       <Filter>ControllerInterface</Filter>
+    </ClInclude>
+    <ClInclude Include="ControllerInterface\Pipes\Pipes.h">
+      <Filter>ControllerInterface\Pipes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
