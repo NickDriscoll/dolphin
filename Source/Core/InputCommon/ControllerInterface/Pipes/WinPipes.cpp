@@ -1,17 +1,17 @@
-// Copyright 2015 Dolphin Emulator Project
+// Copyright 2017 Dolphin Emulator Project
 // Licensed under GPLv2+
 // Refer to the license.txt file included.
 
 #include <array>
 #include <cstdlib>
 #include <fcntl.h>
+#include <io.h>
 #include <iostream>
 #include <locale>
 #include <map>
 #include <sstream>
 #include <string>
 #include <sys/stat.h>
-//#include <unistd.h>
 #include <vector>
 
 #include "Common/FileUtil.h"
@@ -57,7 +57,8 @@ void PopulateDevices()
     const File::FSTEntry& child = fst.children[i];
     if (child.isDirectory)
       continue;
-    int fd = open(child.physicalName.c_str(), O_RDONLY | O_NONBLOCK);
+    int fd;
+    _sopen_s(&fd, child.physicalName.c_str(), _O_RDONLY, 0, _S_IREAD);
     if (fd < 0)
       continue;
     g_controller_interface.AddDevice(std::make_shared<PipeDevice>(fd, child.virtualName));
@@ -93,7 +94,7 @@ void PipeDevice::UpdateInput()
   // Read any pending characters off the pipe. If we hit a newline,
   // then dequeue a command off the front of m_buf and parse it.
   char buf[32];
-  ssize_t bytes_read = read(m_fd, buf, sizeof buf);
+  int bytes_read = read(m_fd, buf, sizeof buf);
   while (bytes_read > 0)
   {
     m_buf.append(buf, bytes_read);
@@ -161,5 +162,5 @@ void PipeDevice::ParseCommand(const std::string& command)
     }
   }
 }
-}
-}
+}  // namespace Pipes
+}  // namespace ciface
